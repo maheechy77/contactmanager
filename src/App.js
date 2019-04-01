@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {BrowserRouter , Route, Switch} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+
+import {Provider} from './Context';
+import Contacts from './container/Contacts/Contacts';
+import Header from './components/layout/Header';
+import AddContact from './container/Add/Addcontact';
+import EditContact from './container/Edit/Editcontact';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider>
+          <BrowserRouter basename={process.env.PUBLIC_URL} >
+            <div className="App">
+              <div className='container' >
+                <Header branding='Contact Manager' />
+                <Switch>
+                  <Route exact path='/' component={Contacts} />
+                  <Route exact path='/addcontact' component={AddContact} /> 
+                  <Route exact path='/edit/:id' component={EditContact}/>
+                </Switch>
+              </div>
+            </div>
+        </BrowserRouter> 
+      </Provider>  
     );
   }
 }
